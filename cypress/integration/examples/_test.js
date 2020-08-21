@@ -5,13 +5,16 @@ describe ('Pizza App', () =>{
     cy.url().should('include', 'localhost')
     })
 
-    // it('can type something in the "text" input ', () =>  {
-    //     cy.get('"name"')
-    //     .type('Nice')
-    //     .should('have.value', 'Have Fun')
-    })
+    it('working navlink', () => {
+        cy.get('nav a')
+          .should('have.attr', 'href').and('include', '/')
+          .then((href) => {
+            cy.visit('http://localhost:3000')
+          })
+     })
 
     // it('the submit button is enabled', () => {
     //     cy.get('#submitBtn').should('be.disabled')
 
+})
 })
