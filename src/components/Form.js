@@ -1,110 +1,138 @@
-import React, { useState } from 'react'
-
-
-
-
+import React, { useState } from "react";
+import * as yup from "yup";
+import axios from "axios";
 
 function Pizza() {
-const [name, setName] = useState("")
-const [special, setSpecial] = useState("")
-const [sizes, setSizes] = useState([])
-const [cheese, setCheese] = useState(false)
-const [pepperoni, setPepperoni] = useState(false)
-const [meatball, setMeatball] = useState(false)
-const [pineapple, setPineapple] = useState(false)
+  const initialFormValues = {
+    name: "",
+    instructions: "",
+    toppings: {
+      pepperoni: false,
+      sausage: false,
+      meatballs: false,
+      cheese: false,
+    },
+    sizes: "",
+  };
 
+  const initialPizzaOrder = {
+    name: "Winnie",
+    instructions: "Add Sauce",
+  };
 
+  const [pizzaForm, setPizzaForm] = useState(initialFormValues);
+  const [pizzaOrder, setPizzaOrder] = useState([]);
+  const [sizes, setSizes] = useState(initialFormValues);
 
-const handler = (e) => {
- e.preventDefault()
- const formName = document.getElementById("name")
- setName(formName.value)
- const formSpecial = document.getElementById("special")
- setSpecial(formSpecial.value)
+  const handleChanges = (event) => {
+    // const value =
+    //   event.target.type === "checkbox"
+    //     ? event.target.checked
+    //     : event.target.name;
+    const value = event.target.value;
+    const name = event.target.name;
+    const isChecked = event.target.checked;
 
- //DropDown
- const formSizes = document.getElementById("sizes");
-//  console.log(formSizes.options[formSizes.selectedIndex].value);
- setSizes(formSizes.options[formSizes.selectedIndex].value)
-//  setSizes(formSizes.value)
+    setSizes({
+      ...pizzaForm,
+      [name]: value,
+    });
 
- //CheckBoxes
- const formCheese = document.getElementById("cheese")
- setCheese(formCheese.checked)
+    setPizzaForm({
+      ...pizzaForm,
+      toppings: {
+        ...pizzaForm.toppings,
+        [name]: isChecked,
+      },
+      [name]: value,
+    });
+  };
 
- const formPepperoni = document.getElementById("pepperoni")
- setPepperoni(formPepperoni.checked)
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
- const formMeatball = document.getElementById("meatball")
- setMeatball(formMeatball.checked)
+  // const changeCheckBox = (event => {
 
- const formPineapple = document.getElementById("pineapple")
- setPineapple(formPineapple.checked)
- console.log()
- console.log(sizes)
+  // })
 
-if (formName.value.length < 2){
-    // console.log(name.value.length) 
-    window.alert("name requires 2 or more characters")
-    
-}
+  // const formSchema = yup.object().shape({
+  //     pepperoni: yup
+  //     .string()
+  //     .
+  // })
 
-}
+  // onChange={changeCheckBox}
 
-    return (
-        <form onSubmit={(e) => handler(e)}>
-        <label for="name">Name
-        <input type="text" id="name">
-        </input>     
-        </label>
-        <br></br>
+  return (
+    <form onSubmit={handleSubmit}>
+      <h3> Your Name:</h3>
+      <label htlmFor="nameInput"> Name </label>
+      <input
+        placeholder="Insert Name"
+        id="nameInput"
+        type="text"
+        name="name"
+        onChange={handleChanges}
+        value={pizzaForm.name}
+      />
 
-        <label for="special">Add Special Instructions
-        <input type="text" id="special">
-        </input>
-        </label>
-        <br></br>
+      <h3> Add Instructions Below:</h3>
+      <label htlmFor="instructionsInput"> Name </label>
+      <input
+        placeholder="Add Instructions"
+        id="instructionsInput"
+        type="text"
+        name="instructions"
+        onChange={handleChanges}
+      />
 
-        <select id="sizes">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
+      <h3> Choose Toppings Below:</h3>
+      <label htlmFor="toppingsInput"> pepperoni </label>
+      <input
+        placeholder="Choose Toppings "
+        id="toppingsInput"
+        type="checkbox"
+        name="pepperoni"
+        onChange={handleChanges}
+      />
+
+      <label htlmFor="toppingsInput"> meatball </label>
+      <input
+        placeholder="Choose Toppings "
+        id="meatballs"
+        type="checkbox"
+        name="meatballs"
+        onChange={handleChanges}
+      />
+      <label htlmFor="toppingsInput"> sausage </label>
+      <input
+        placeholder="Choose Toppings "
+        id="sausage"
+        type="checkbox"
+        name="sausage"
+        onChange={handleChanges}
+      />
+
+      <label htlmFor="toppingsInput"> cheese </label>
+      <input
+        placeholder="Choose Toppings "
+        id="cheese"
+        type="checkbox"
+        name="cheese"
+        onChange={handleChanges}
+      />
+      <br></br>
+      <label>
+        <h2>Choose Your Size Pizza Below:</h2>
+        <select name="sizes" onChange={handleChanges}>
+          <option value="Small>">Small</option>
+          <option value="Medium>">Medium</option>
+          <option value="Large>">Large</option>
         </select>
-        <br></br>
-
-        <label for="cheese"> Cheese 
-        <input type="checkbox" id="cheese" name="cheese" value="cheese"></input>
-        </label>
-        <br></br>
-        <label for="pepperoni"> Pepperoni 
-        <input type="checkbox" id="pepperoni" name="pepperoni" value="pepperoni"></input>
-        </label>
-        <br></br>
-        <label for="meatball"> Meatball 
-        <input type="checkbox" id="meatball" name="meatball" value="meatball"></input>
-        </label>
-        <br></br>
-        <label for="pineapple"> Pineapple 
-        <input type="checkbox" id="pineapple" name="pineapple" value="pineapple"></input>
-        </label>
-        <br></br>
-        <button id= "submitbtn" onClick={(e) => handler(e)} >Place Order</button>
-        <div>
-            <h2>Here is your order</h2>
-            <ol>
-                Name:{name}
-                <br></br>
-                Sizes:{sizes}
-                <br></br>
-                Toppings: {cheese ? "cheese" : ""} {pineapple ? "pineapple": ""} {meatball ? "meatball": ""} {pepperoni ? "pepperoni": ""}
-                <br></br>
-                Special Instructions:{special}
-            </ol>
-        </div>
-        </form>
-
-       
-    )
+      </label>
+    </form>
+  );
 }
 
 export default Pizza;

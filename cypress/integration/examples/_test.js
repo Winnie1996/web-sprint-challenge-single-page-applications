@@ -14,7 +14,7 @@ describe ('Pizza App', () =>{
      })
 
     // it('the submit button is enabled', () => {
-    //     cy.get('#submitBtn').should('be.disabled')
-
+    //     cy.get(':checkbox').should('be.disabled')
+    // })
 })
 })
