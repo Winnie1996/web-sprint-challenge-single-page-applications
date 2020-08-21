@@ -21,9 +21,9 @@ const Styles = styled.div`
  }
 
 img{
-    width:1180px;
+    width:900px;
     height:700px;
-    margin-left:1%;
+    margin-left:2%;
     border:8px solid red;
 
 }

@@ -88,7 +88,7 @@ if (formName.value.length < 2){
         <input type="checkbox" id="pineapple" name="pineapple" value="pineapple"></input>
         </label>
         <br></br>
-        <button onClick={(e) => handler(e)} >Place Order</button>
+        <button id= "submitbtn" onClick={(e) => handler(e)} >Place Order</button>
         <div>
             <h2>Here is your order</h2>
             <ol>
